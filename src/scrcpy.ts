@@ -3,7 +3,9 @@ import * as cp from 'child_process';
 import {
   getDefaultRecordingPath,
   getDefaultFileName,
-  askForBitRate,
+  askForVideoBitRate,
+  askForEnableAudio,
+  askForAudioBitRate,
   askForFrameRate,
   askForPath,
   askForSize,
@@ -13,13 +15,15 @@ import {
 import { Options, Mode } from './types';
 
 function start(options: Options) {
-  const { bitrate, framerate, path, size, crop } = options;
+  const { videoBitrate, enableAudio, audioBitrate, framerate, path, size, crop } = options;
   const p =
     options.mode === 'record' ? path || getDefaultRecordingPath() : undefined;
 
   const recordParam =
     options.mode === 'record' ? `--record ${p}/${getDefaultFileName()}` : '';
-  const bitrateParam = bitrate ? `--bit-rate ${bitrate}` : '';
+  const videoBitrateParam = videoBitrate ? `--video-bit-rate ${videoBitrate}` : '';
+  const enableAudioParam = enableAudio == false ? '--no-audio' : '';
+  const audioBitrateParam = audioBitrate ? `--audio-bit-rate ${audioBitrate}` : '';
   const framerateParam = framerate ? `--max-fps ${framerate}` : '';
   const sizeParam = size ? `--max-size ${size}` : '';
   const cropParam = crop ? `--crop ${crop}` : '';
@@ -27,7 +31,7 @@ function start(options: Options) {
   showNotSpecifiedMessage(options);
 
   cp.exec(
-    `scrcpy ${recordParam} ${bitrateParam} ${framerateParam} ${sizeParam} ${cropParam}`,
+    `scrcpy ${recordParam} ${videoBitrateParam} ${enableAudioParam} ${audioBitrateParam} ${framerateParam} ${sizeParam} ${cropParam}`,
     error => {
       if (error?.message?.includes('command not found')) {
         window
@@ -55,9 +59,19 @@ function record() {
   start({ mode: 'record' });
 }
 
-async function customBitRate(mode: Mode) {
-  const bitrate = await askForBitRate();
+async function customVideoBitRate(mode: Mode) {
+  const bitrate = await askForVideoBitRate();
   start({ mode: mode, bitrate: bitrate || null });
+}
+
+async function customEnableAudio(mode: Mode) {
+  const enableAudio = await askForEnableAudio();
+  start({ mode: mode, enableAudio: enableAudio === 'Yes' });
+}
+
+async function customAudioBitRate(mode: Mode) {
+  const bitrate = await askForAudioBitRate();
+  start({ mode: mode, audioBitrate: bitrate || null });
 }
 
 async function customFrameRate(mode: Mode) {
@@ -81,7 +95,9 @@ async function customCrop(mode: Mode) {
 }
 
 async function customEverything(mode: Mode) {
-  const bitrate = await askForBitRate();
+  const videoBitRate = await askForVideoBitRate();
+  const enableAudio = await askForEnableAudio();
+  const audioBitRate = await askForAudioBitRate();
   const framerate = await askForFrameRate();
   const size = await askForSize();
   const crop = await askForCrop();
@@ -91,7 +107,9 @@ async function customEverything(mode: Mode) {
   }
   start({
     mode: mode,
-    bitrate: bitrate || null,
+    videoBitrate: videoBitRate || null,
+    enableAudio: enableAudio === 'Yes',
+    audioBitrate: audioBitRate || null,
     framerate: framerate || null,
     path: path || null,
     size: size || null,
@@ -102,7 +120,9 @@ async function customEverything(mode: Mode) {
 export {
   mirror,
   record,
-  customBitRate,
+  customVideoBitRate,
+  customEnableAudio,
+  customAudioBitRate,
   customFrameRate,
   customPath,
   customSize,

@@ -27,6 +27,18 @@ async function askForBitRate(): Promise<string | undefined> {
   return window.showInputBox({ placeHolder: 'Enter bit rate (e.g. 8M)' });
 }
 
+async function askForVideoBitRate(): Promise<string | undefined> {
+  return window.showInputBox({ placeHolder: 'Enter the video bit rate (e.g. 8M)' });
+}
+
+async function askForEnableAudio(): Promise<string | undefined> {
+  return window.showQuickPick(['Yes', 'No'], { placeHolder: 'Enable audio?' });
+}
+
+async function askForAudioBitRate(): Promise<string | undefined> {
+  return window.showInputBox({ placeHolder: 'Enter audio bit rate (e.g. 8M)' });
+}
+
 async function askForFrameRate(): Promise<string | undefined> {
   return window.showInputBox({ placeHolder: 'Enter frame rate (e.g. 30)' });
 }
@@ -84,6 +96,9 @@ export {
   getDefaultRecordingPath,
   getDefaultFileName,
   askForBitRate,
+  askForVideoBitRate,
+  askForEnableAudio,
+  askForAudioBitRate,
   askForFrameRate,
   askForPath,
   askForSize,
