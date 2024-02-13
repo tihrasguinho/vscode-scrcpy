@@ -10,6 +10,9 @@ import {
   askForPath,
   askForSize,
   askForCrop,
+  askForStayAwake,
+  askForTurnScreenOff,
+  askForShowTouches,
   showNotSpecifiedMessage,
 } from './utils';
 import { Options, Mode } from './types';
@@ -27,11 +30,14 @@ function start(options: Options) {
   const framerateParam = framerate ? `--max-fps ${framerate}` : '';
   const sizeParam = size ? `--max-size ${size}` : '';
   const cropParam = crop ? `--crop ${crop}` : '';
+  const stayAwakeParam = options.stayAwake ? '--stay-awake' : '';
+  const turnScreenOffParam = options.turnScreenOff ? '--turn-screen-off' : '';
+  const showTouchesParam = options.showTouches ? '--show-touches' : '';
 
   showNotSpecifiedMessage(options);
 
   cp.exec(
-    `scrcpy ${recordParam} ${videoBitrateParam} ${enableAudioParam} ${audioBitrateParam} ${framerateParam} ${sizeParam} ${cropParam}`,
+    `scrcpy ${recordParam} ${videoBitrateParam} ${enableAudioParam} ${audioBitrateParam} ${framerateParam} ${sizeParam} ${cropParam} ${stayAwakeParam} ${turnScreenOffParam} ${showTouchesParam}`,
     error => {
       if (error?.message?.includes('command not found')) {
         window
@@ -79,6 +85,21 @@ async function customFrameRate(mode: Mode) {
   start({ mode: mode, framerate: framerate || null });
 }
 
+async function customStayAwake(mode: Mode) {
+  const stayAwake = await askForStayAwake();
+  start({ mode: mode, stayAwake: stayAwake === 'Yes' });
+}
+
+async function customTurnScreenOff(mode: Mode) {
+  const turnScreenOff = await askForTurnScreenOff();
+  start({ mode: mode, turnScreenOff: turnScreenOff === 'Yes' });
+}
+
+async function customShowTouches(mode: Mode) {
+  const showTouches = await askForShowTouches();
+  start({ mode: mode, showTouches: showTouches === 'Yes' });
+}
+
 async function customPath() {
   const path = await askForPath();
   start({ mode: 'record', path: path || null });
@@ -101,6 +122,9 @@ async function customEverything(mode: Mode) {
   const framerate = await askForFrameRate();
   const size = await askForSize();
   const crop = await askForCrop();
+  const stayAwake = await askForStayAwake();
+  const turnScreenOff = await askForTurnScreenOff();
+  const showTouches = await askForShowTouches();
   let path;
   if (mode === 'record') {
     path = await askForPath();
@@ -114,6 +138,9 @@ async function customEverything(mode: Mode) {
     path: path || null,
     size: size || null,
     crop: crop || null,
+    stayAwake: stayAwake === 'Yes',
+    turnScreenOff: turnScreenOff === 'Yes',
+    showTouches: showTouches === 'Yes',
   });
 }
 
@@ -127,5 +154,8 @@ export {
   customPath,
   customSize,
   customCrop,
+  customStayAwake,
+  customTurnScreenOff,
+  customShowTouches,
   customEverything,
 };

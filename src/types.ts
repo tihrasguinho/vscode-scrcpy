@@ -10,6 +10,9 @@ interface Options {
   path?: string | undefined | null;
   size?: string | undefined | null;
   crop?: string | undefined | null;
+  stayAwake?: boolean | undefined | null;
+  turnScreenOff?: boolean | undefined | null;
+  showTouches?: boolean | undefined | null;
 }
 
 export { Mode, Options };

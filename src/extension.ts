@@ -9,6 +9,9 @@ import {
   customPath,
   customSize,
   customCrop,
+  customStayAwake,
+  customTurnScreenOff,
+  customShowTouches,
   customEverything,
 } from './scrcpy';
 
@@ -29,6 +32,9 @@ export function activate(context: ExtensionContext) {
     register('scrcpy.mirrorSize', () => customSize('mirror')),
     register('scrcpy.mirrorCrop', () => customCrop('mirror')),
     register('scrcpy.mirrorCustom', () => customEverything('mirror')),
+    register('scrcpy.mirrorStayAwake', () => customStayAwake('mirror')),
+    register('scrcpy.mirrorTurnScreenOff', () => customTurnScreenOff('mirror')),
+    register('scrcpy.mirrorShowTouches', () => customShowTouches('mirror')),
     register('scrcpy.record', record),
     register('scrcpy.recordVideoBitRate', () => customVideoBitRate('record')),
     register('scrcpy.recordEnableAudio', () => customEnableAudio('record')),
@@ -38,6 +44,9 @@ export function activate(context: ExtensionContext) {
     register('scrcpy.recordSize', () => customSize('record')),
     register('scrcpy.recordCrop', () => customCrop('record')),
     register('scrcpy.recordCustom', () => customEverything('record')),
+    register('scrcpy.recordStayAwake', () => customStayAwake('record')),
+    register('scrcpy.recordTurnScreenOff', () => customTurnScreenOff('record')),
+    register('scrcpy.recordShowTouches', () => customShowTouches('record')),
   ];
   context.subscriptions.push(...registrations);
 }

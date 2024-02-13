@@ -2,8 +2,8 @@
   "name": "scrcpy",
   "displayName": "scrcpy",
   "description": "Mirror, control, and record android device with scrcpy.",
-  "version": "0.0.8",
-  "publisher": "ihsanis",
+  "version": "0.0.9",
+  "publisher": "ihsanis (Tihrasguinho version)",
   "license": "SEE THE LICENSE FILE",
   "repository": "https://github.com/maestralsol/vscode-scrcpy",
   "icon": "icon.png",
@@ -13,21 +13,7 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [
-    "onCommand:scrcpy.mirror",
-    "onCommand:scrcpy.mirrorBitRate",
-    "onCommand:scrcpy.mirrorFrameRate",
-    "onCommand:scrcpy.mirrorSize",
-    "onCommand:scrcpy.mirrorCrop",
-    "onCommand:scrcpy.mirrorCustom",
-    "onCommand:scrcpy.record",
-    "onCommand:scrcpy.recordBitRate",
-    "onCommand:scrcpy.recordFrameRate",
-    "onCommand:scrcpy.recordPath",
-    "onCommand:scrcpy.recordSize",
-    "onCommand:scrcpy.recordCrop",
-    "onCommand:scrcpy.recordCustom"
-  ],
+  "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
@@ -37,8 +23,8 @@
         "category": "scrcpy"
       },
       {
-        "command": "scrcpy.mirrorBitRate",
-        "title": "mirror (specify bit rate)",
+        "command": "scrcpy.mirrorVideoBitRate",
+        "title": "mirror (specify video bit rate)",
         "category": "scrcpy"
       },
       {

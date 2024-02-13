@@ -49,6 +49,24 @@ async function askForPath(): Promise<string | undefined> {
   });
 }
 
+async function askForStayAwake(): Promise<string | undefined> {
+  return window.showQuickPick(['Yes', 'No'], {
+    placeHolder: 'Stay awake?',
+  });
+}
+
+async function askForTurnScreenOff(): Promise<string | undefined> {
+  return window.showQuickPick(['Yes', 'No'], {
+    placeHolder: 'Turn screen off?',
+  });
+}
+
+async function askForShowTouches(): Promise<string | undefined> {
+  return window.showQuickPick(['Yes', 'No'], {
+    placeHolder: 'Show touches?',
+  });
+}
+
 async function askForSize(): Promise<string | undefined> {
   return window.showInputBox({
     placeHolder:
@@ -103,5 +121,8 @@ export {
   askForPath,
   askForSize,
   askForCrop,
+  askForStayAwake,
+  askForTurnScreenOff,
+  askForShowTouches,
   showNotSpecifiedMessage,
 };
